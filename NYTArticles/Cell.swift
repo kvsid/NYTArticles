@@ -8,13 +8,12 @@
 import UIKit
 
 class Cell: UITableViewCell {
-    var label: UILabel = {
-        var sign = UILabel(frame: CGRect(x: 20.0, y: 15.0, width: 400.0, height: 30))
-        return sign
-    }()
+    var label = UILabel(frame: CGRect(x: 20.0, y: 15.0, width: 350, height: 30))
+
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        label.numberOfLines = 0
         self.addSubview(label)
     }
 

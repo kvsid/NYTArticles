@@ -10,8 +10,7 @@ import UIKit
 class CategoriesViewController: UIViewController, UITableViewDataSource {
     private let articles = ArticlesViewController()
     private var categoriesTable = UITableView()
-    public var categories = ["Adventure Sports", "Arts & Leisure", "Arts", "Automobiles", "Blogs", "Books", "Booming"]
-//    var currentCategory : String? = nil
+    private var categories = ["Adventure Sports", "Arts & Leisure", "Arts", "Automobiles", "Blogs", "Books", "Booming", "Culture", "Flight", "Generations"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +22,9 @@ class CategoriesViewController: UIViewController, UITableViewDataSource {
 
 
     private func setupTable() {
-        categoriesTable = UITableView(frame: view.bounds, style: .plain)
+        categoriesTable = UITableView(frame: view.frame, style: .plain)
         categoriesTable.delegate = self
         categoriesTable.dataSource = self
-        categoriesTable.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         categoriesTable.register(Cell.self, forCellReuseIdentifier: "Cell")
 
         view.addSubview(categoriesTable)
@@ -37,6 +35,7 @@ extension CategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
     }
+
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
