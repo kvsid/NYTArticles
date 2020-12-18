@@ -21,7 +21,6 @@ class CurrentArticleViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Article"
-        view.backgroundColor = .white
         if let article = currentArticle {
             let url = URL(string: article.web_url)!
             articleWebView.load(URLRequest(url: url))

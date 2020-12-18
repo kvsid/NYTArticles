@@ -19,14 +19,13 @@ class ArticlesViewController: UIViewController, UITableViewDataSource, UITableVi
         view.backgroundColor = .white
         setupTable()
         requestArticles()
-
-        
     }
+
     private func setupTable() {
         articlesTable = UITableView(frame: view.bounds, style: .plain)
         articlesTable.delegate = self
         articlesTable.dataSource = self
-        articlesTable.register(Cell.self, forCellReuseIdentifier: "Cell")
+        articlesTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
         view.addSubview(articlesTable)
     }
@@ -36,9 +35,12 @@ class ArticlesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let currentArticle = articles[indexPath.row]
-        cell.label.text = currentArticle.lead_paragraph
+        if let label = cell.textLabel {
+            label.text = currentArticle.headline.main
+            label.numberOfLines = 0
+        }
         return cell
     }
 
@@ -52,10 +54,10 @@ class ArticlesViewController: UIViewController, UITableViewDataSource, UITableVi
         return 70
     }
 
-
         private func requestArticles() {
             if let category = category {
-                let originalUrlString = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=nQIkx0QlHCglGGGCuIyg4Fnf391xUubA&fq=news_desk:\(category)"
+                let originalUrlString =
+                    "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=nQIkx0QlHCglGGGCuIyg4Fnf391xUubA&fq=news_desk:\(category)"
                 let urlString = originalUrlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 let url = URL(string: urlString!)!
             URLSession.shared.dataTask(with: url) { data, response, error in

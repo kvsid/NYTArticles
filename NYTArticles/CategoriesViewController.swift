@@ -20,12 +20,11 @@ class CategoriesViewController: UIViewController, UITableViewDataSource {
         setupTable()
     }
 
-
     private func setupTable() {
         categoriesTable = UITableView(frame: view.frame, style: .plain)
         categoriesTable.delegate = self
         categoriesTable.dataSource = self
-        categoriesTable.register(Cell.self, forCellReuseIdentifier: "Cell")
+        categoriesTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
         view.addSubview(categoriesTable)
     }
@@ -36,11 +35,10 @@ extension CategoriesViewController: UITableViewDelegate {
         return categories.count
     }
 
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let currentCategory = categories[indexPath.row]
-        cell.label.text = currentCategory
+        cell.textLabel?.text = currentCategory
 
         return cell
     }
@@ -51,5 +49,4 @@ extension CategoriesViewController: UITableViewDelegate {
         articlesVC.category = currentCategory
         navigationController?.pushViewController(articlesVC, animated: true)
     }
-
 }

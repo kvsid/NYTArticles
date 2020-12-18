@@ -15,10 +15,13 @@ struct APIResponse: Codable {
 struct ResponseObject: Codable {
     var docs: [Article]
 }
+struct HeadlineObject: Codable {
+    var main: String
+}
 
 struct Article: Codable {
-    var lead_paragraph: String
     var web_url: String
+    var headline : HeadlineObject
 }
 
 
