@@ -8,15 +8,14 @@
 import UIKit
 
 class ArticlesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private var articlesTable = UITableView()
     var category: String?
 
-    var articles = [Article]()
+    private var articlesTable = UITableView()
+    private var articles = [Article]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = category
-        view.backgroundColor = .white
         setupTable()
         requestArticles()
     }
@@ -25,17 +24,17 @@ class ArticlesViewController: UIViewController, UITableViewDataSource, UITableVi
         articlesTable = UITableView(frame: view.bounds, style: .plain)
         articlesTable.delegate = self
         articlesTable.dataSource = self
-        articlesTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        articlesTable.register(UITableViewCell.self, forCellReuseIdentifier: "article")
 
         view.addSubview(articlesTable)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        articles.count
+        return articles.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "article", for: indexPath)
         let currentArticle = articles[indexPath.row]
         if let label = cell.textLabel {
             label.text = currentArticle.headline.main
@@ -45,21 +44,18 @@ class ArticlesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      let article = CurrentArticleViewController()
-        article.currentArticle = articles[indexPath.row]
-      navigationController?.pushViewController(article, animated: true)
+      let currentArticleVC = CurrentArticleViewController()
+        currentArticleVC.article = articles[indexPath.row]
+      navigationController?.pushViewController(currentArticleVC, animated: true)
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
+    private func requestArticles() {
+        if let category = category {
+            let originalUrlString = "https://api.nytimes.com/svc/search/v2/articlesearch" +
+                ".json?api-key=nQIkx0QlHCglGGGCuIyg4Fnf391xUubA&fq=news_desk:\(category)"
+            let urlString = originalUrlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            let url = URL(string: urlString!)!
 
-        private func requestArticles() {
-            if let category = category {
-                let originalUrlString =
-                    "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=nQIkx0QlHCglGGGCuIyg4Fnf391xUubA&fq=news_desk:\(category)"
-                let urlString = originalUrlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-                let url = URL(string: urlString!)!
             URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data, error == nil, response != nil else {
                     print("Something went wrong. The data nil")
@@ -75,7 +71,6 @@ class ArticlesViewController: UIViewController, UITableViewDataSource, UITableVi
                     print("Something went wrong")
                 }
             }.resume()
-            }
         }
+    }
 }
-

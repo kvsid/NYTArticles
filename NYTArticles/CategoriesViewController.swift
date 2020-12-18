@@ -8,9 +8,11 @@
 import UIKit
 
 class CategoriesViewController: UIViewController, UITableViewDataSource {
-    private let articles = ArticlesViewController()
     private var categoriesTable = UITableView()
-    private var categories = ["Adventure Sports", "Arts & Leisure", "Arts", "Automobiles", "Blogs", "Books", "Booming", "Culture", "Flight", "Generations"]
+    private var categories = [
+        "Adventure Sports", "Arts & Leisure", "Arts", "Automobiles",
+        "Blogs", "Books", "Booming", "Culture", "Flight", "Generations"
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,7 @@ class CategoriesViewController: UIViewController, UITableViewDataSource {
         categoriesTable = UITableView(frame: view.frame, style: .plain)
         categoriesTable.delegate = self
         categoriesTable.dataSource = self
-        categoriesTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        categoriesTable.register(UITableViewCell.self, forCellReuseIdentifier: "category")
 
         view.addSubview(categoriesTable)
     }
@@ -36,7 +38,7 @@ extension CategoriesViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "category", for: indexPath)
         let currentCategory = categories[indexPath.row]
         cell.textLabel?.text = currentCategory
 

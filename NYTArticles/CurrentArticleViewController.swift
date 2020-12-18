@@ -9,8 +9,8 @@ import UIKit
 import WebKit
 
 class CurrentArticleViewController: UIViewController, WKNavigationDelegate {
-    var articleWebView: WKWebView!
-    var currentArticle: Article?
+    private var articleWebView: WKWebView!
+    var article: Article?
 
     override func loadView() {
         articleWebView = WKWebView()
@@ -21,7 +21,7 @@ class CurrentArticleViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Article"
-        if let article = currentArticle {
+        if let article = article {
             let url = URL(string: article.web_url)!
             articleWebView.load(URLRequest(url: url))
             articleWebView.allowsBackForwardNavigationGestures = true

@@ -1,10 +1,9 @@
 //
-//  Articles.swift
+//  Article.swift
 //  NYTArticles
 //
 //  Created by Xenia Sidorova on 16.12.2020.
 //
-
 
 import UIKit
 
@@ -23,5 +22,3 @@ struct Article: Codable {
     var web_url: String
     var headline : HeadlineObject
 }
-
-
